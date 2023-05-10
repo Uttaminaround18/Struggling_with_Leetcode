@@ -1505,7 +1505,7 @@ int minOperations(vector<int> &nums, int x)
     //     return n - ans;
     // else
     //     return -1;
-
+    //  hello
     return ans;
 }
 
