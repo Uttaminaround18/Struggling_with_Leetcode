@@ -1788,10 +1788,63 @@ int totalCuts(int n, int k, vector<int> &nums)
     return cnt;
 }
 
+int numSub(string s)
+{
+    int n = s.size();
+    int j = 0;
+    int i = 0;
+    int count_ones = 0;
+    int ans = 0;
+
+    while (j < n)
+    {
+        if (s[j] == '1')
+            count_ones += 1;
+
+        while (j - i + 1 > count_ones && i <= j)
+        {
+            if (s[i] == '1')
+                count_ones -= 1;
+            i++;
+        }
+
+        ans += j - i + 1;
+        j++;
+    }
+
+    return ans;
+}
+
+int helper1(int ind, int ind2, vector<int> &nums1, vector<int> &nums2, vector<vector<int>> &dp)
+{
+    if (ind == 0 || ind2 == 0)
+        return 0;
+
+    if (dp[ind][ind2] != -1)
+        return dp[ind][ind2];
+
+    if (nums1[ind - 1] == nums2[ind2 - 1])
+    {
+        return dp[ind][ind2] = 1 + helper1(ind - 1, ind2 - 1, nums1, nums2, dp);
+    }
+    else
+    {
+        return dp[ind][ind2] = 0 + max(helper1(ind - 1, ind2, nums1, nums2, dp), helper1(ind, ind2 - 1, nums1, nums2, dp));
+    }
+}
+
+int maxUncrossedLines(vector<int> &nums1, vector<int> &nums2)
+{
+    int n1 = nums1.size();
+    int n2 = nums2.size();
+    vector<vector<int>> dp(n1 + 1, vector<int>(n2 + 1, -1));
+    return helper1(n1, n2, nums1, nums2, dp);
+}
+
 int main()
 {
-    vector<int> v({2, 6, 10, 2, 8});
-    vector<int> v1({4, 2, 8, 1, 3});
+    vector<int> v({1, 3, 7, 1, 7, 5});
+    vector<int> v1({1, 9, 2, 5, 1});
     vector<int> q({8, 9, 12});
     vector<vector<int>> nums({{0, 100000}});
 
@@ -1805,7 +1858,9 @@ int main()
     // for (auto it : ans)
     //     cout << it << " ";
 
-    cout << totalCuts(5, 6, v) << "\n";
+    // string s = "111111";
+
+    cout << maxUncrossedLines(v, v1) << "\n";
 
     // sort(players.begin(), players.end());
     // int n = players.size();
