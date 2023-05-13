@@ -1841,6 +1841,30 @@ int maxUncrossedLines(vector<int> &nums1, vector<int> &nums2)
     return helper1(n1, n2, nums1, nums2, dp);
 }
 
+int maxPower(string s)
+{
+    int n = s.size();
+    int i = 0;
+    int j = 1;
+    int ans = -1;
+
+    while (j < n)
+    {
+        if (s[i] != s[j])
+        {
+            i = j;
+            j++;
+        }
+        else
+        {
+            ans = max(ans, j - i + 1);
+            j++;
+        }
+    }
+
+    return ans;
+}
+
 int main()
 {
     vector<int> v({1, 3, 7, 1, 7, 5});
@@ -1858,9 +1882,8 @@ int main()
     // for (auto it : ans)
     //     cout << it << " ";
 
-    // string s = "111111";
-
-    cout << maxUncrossedLines(v, v1) << "\n";
+    string s = "abbcccddddeeeeedcba";
+    cout << maxPower(s) << "\n";
 
     // sort(players.begin(), players.end());
     // int n = players.size();
