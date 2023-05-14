@@ -1865,9 +1865,37 @@ int maxPower(string s)
     return ans;
 }
 
+bool doesValidArrayExist(vector<int> &derived)
+{
+    int n = derived.size();
+    vector<int> origin(n, 0);
+    origin[0] = 1;
+
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (derived[i] == 1 && origin[i] == 1)
+        {
+            origin[i + 1] = 0;
+        }
+        else if (derived[i] == 0 && origin[i] == 0)
+        {
+            origin[i + 1] = 0;
+        }
+        else
+        {
+            origin[i + 1] = 1;
+        }
+    }
+
+    if (origin[n - 1] ^ origin[0] == derived[n - 1])
+        return true;
+    else
+        return false;
+}
+
 int main()
 {
-    vector<int> v({1, 3, 7, 1, 7, 5});
+    vector<int> v({1, 0});
     vector<int> v1({1, 9, 2, 5, 1});
     vector<int> q({8, 9, 12});
     vector<vector<int>> nums({{0, 100000}});
@@ -1882,9 +1910,7 @@ int main()
     // for (auto it : ans)
     //     cout << it << " ";
 
-    string s = "abbcccddddeeeeedcba";
-    cout << maxPower(s) << "\n";
-
+    cout << doesValidArrayExist(v) << "\n";
     // sort(players.begin(), players.end());
     // int n = players.size();
     // vector<vector<int>> dp(n, vector<int>(n + 1, -1));
