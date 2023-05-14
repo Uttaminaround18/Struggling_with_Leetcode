@@ -1893,6 +1893,33 @@ bool doesValidArrayExist(vector<int> &derived)
         return false;
 }
 
+int countHomogenous(string s)
+{
+    int n = s.size();
+    int i = 0;
+    int j = 0;
+    unordered_map<int, int> mp;
+    int ans = 0;
+    int mod = 1e9 + 7;
+
+    while (j < n)
+    {
+        mp[s[j]]++;
+
+        while (mp.size() > 1 && i <= j)
+        {
+            mp[s[i]]--;
+            if (mp[s[i]] == 0)
+                mp.erase(s[i]);
+            i++;
+        }
+        ans = (ans + j - i + 1) % mod;
+        j++;
+    }
+
+    return ans;
+}
+
 int main()
 {
     vector<int> v({1, 0});
@@ -1910,7 +1937,8 @@ int main()
     // for (auto it : ans)
     //     cout << it << " ";
 
-    cout << doesValidArrayExist(v) << "\n";
+    string s = "zzzzz";
+    cout << countHomogenous(s) << "\n";
     // sort(players.begin(), players.end());
     // int n = players.size();
     // vector<vector<int>> dp(n, vector<int>(n + 1, -1));
