@@ -1920,9 +1920,103 @@ int countHomogenous(string s)
     return ans;
 }
 
+int diffSum(int n, int m, vector<int> &arr)
+{
+    if (n == m)
+        return 0;
+
+    sort(arr.begin(), arr.end());
+    long long sum1 = 0, sum2 = 0;
+    for (int i = 0; i < m; i++)
+        sum1 += arr[i];
+
+    for (int i = n - 1; m > 0; i--)
+    {
+        sum2 += arr[i];
+        m--;
+    }
+
+    return (int)(sum2 - sum1);
+}
+
+string removeTrailingZeros(string num)
+{
+    int n = num.size();
+    int i;
+
+    for (i = n - 1; i >= 0; i--)
+    {
+        if (num[i] != '0')
+            break;
+    }
+
+    string ans = "";
+    for (int j = 0; j <= i; j++)
+        ans += num[j];
+
+    return ans;
+}
+
+vector<int> moveZeroes(vector<int> &nums)
+{
+    int n = nums.size();
+    int i = 0, j = 0;
+
+    if (n == 1)
+        return nums;
+
+    while (j < n)
+    {
+        while (i < n)
+        {
+            if (nums[i] != 0)
+                i++;
+            else
+                break;
+        }
+
+        if (i > n)
+            break;
+
+        if (nums[j] != 0)
+            swap(nums[j], nums[i]);
+        j++;
+    }
+
+    return nums;
+}
+
+int semiOrderedPermutation(vector<int> &nums)
+{
+    int n = nums.size();
+    int indi, indj;
+    for (int i = 0; i < n; i++)
+    {
+        if (nums[i] == 1)
+            indi = i;
+        if (nums[i] == n)
+            indj = i;
+    }
+
+    if (indi == 0 && indj == n - 1)
+        return 0;
+
+    int ans = 0;
+    if (indi < indj)
+    {
+        ans += indi + (n - 1 - indj);
+    }
+    else
+    {
+        ans += (n - 1 - indj) + (indi - 1);
+    }
+
+    return ans;
+}
+
 int main()
 {
-    vector<int> v({1, 0});
+    vector<int> v({1, 3, 4, 2, 5});
     vector<int> v1({1, 9, 2, 5, 1});
     vector<int> q({8, 9, 12});
     vector<vector<int>> nums({{0, 100000}});
@@ -1931,19 +2025,15 @@ int main()
     // {
     //     players.push_back({v[i], v1[i]});
     // }
-    // vector<int> ans;
+    vector<int> ans;
     // ans = colorTheArray(1, nums);
 
-    // for (auto it : ans)
-    //     cout << it << " ";
-
-    string s = "zzzzz";
-    cout << countHomogenous(s) << "\n";
     // sort(players.begin(), players.end());
     // int n = players.size();
     // vector<vector<int>> dp(n, vector<int>(n + 1, -1));
 
-    // string s = "abcd";
+    cout << semiOrderedPermutation(v) << "\n";
+
     // string s2 = "pq";
 
     // cout << antiqueItems(v, v1) << "\n";
